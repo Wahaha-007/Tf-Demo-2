@@ -1,3 +1,7 @@
+# 1. Create key separately in shell using command
+# > ssh-keygen -f mykey # -f = output keyfile
+# 2. Add Allow All TCP from your IP to default SG
+
 resource "aws_key_pair" "mykey" {
   key_name   = "mykey"
   public_key = file(var.PATH_TO_PUBLIC_KEY)
@@ -15,7 +19,7 @@ resource "aws_instance" "example" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/script.sh",
-      "sudo sed -i -e 's/\r$//' /tmp/script.sh",  # Remove the spurious CR characters.
+      "sudo sed -i -e 's/\r$//' /tmp/script.sh", # Remove the spurious CR characters.
       "sudo /tmp/script.sh",
     ]
   }
